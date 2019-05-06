@@ -3,10 +3,25 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+
+variables:
+  #TODO: These variables need to be in the matrix
+  platform: x64
+  configuration: Debug
+
+  # Permanent environment variables
+  TIMEOUT_MINS: 10
+  NINJA_TAG: v1.8.2
+  NINJA_SHA512: 9B9CE248240665FCD6404B989F3B3C27ED9682838225E6DC9B67B551774F251E4FF8A207504F941E7C811E7A8BE1945E7BCB94472A335EF15E23A0200A32E6D5
+  NINJA_PATH: C:\Tools\ninja\ninja-%NINJA_TAG%
+  VCVAR2015: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
+  VCVAR2017: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat'
+
+
 strategy:
   matrix:
-    VS2015:
-      imageName: 'vs2015-win2012r2'
+    # VS2015:
+    #   imageName: 'vs2015-win2012r2'
     VS2017:
       imageName: 'vs2017-win2016'
 
@@ -14,6 +29,10 @@ pool:
   vmImage: $(imageName)
 
 steps:
+- checkout: self
+  persistCredentials: true
+  clean: true
+
 - script: echo $(imageName)
   displayName: 'Echo vm name'
 
@@ -21,4 +40,15 @@ steps:
     echo %AGENT_OS%
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
+    echo Invoke-RestMethod -Uri "https://ci.appveyor.com/api/projects/dadonenf/GSL/build/1.0.106" -Method GET -Headers $headers
   displayName: 'Run a multi-line script'
+
+- script: |
+    echo Running git branch...
+    git branch
+    echo Trying to update git repo
+    echo HI >> temp.log
+    git add temp.log
+    git commit -m "[skip ci] updating the log"
+    git push
+  displayName: 'Try some git commands'
