@@ -44,8 +44,16 @@ steps:
   displayName: 'Run a multi-line script'
 
 - script: |
+    echo Setup Git identity
+    git config --global user.email "you@example.com"
+    git config --global user.name "Asm Pusher Bot"
+
+    echo Running git checkout of %SYSTEM_PULLREQUEST_TARGETBRANCH%
+    git checkout %SYSTEM_PULLREQUEST_TARGETBRANCH%
+    
     echo Running git branch...
     git branch
+
     echo Trying to update git repo
     echo HI >> temp.log
     git add temp.log
