@@ -63,5 +63,17 @@ steps:
       git commit -m "[skip ci] updating the log"
       git push
     )
-
   displayName: 'Try some git commands'
+
+- powershell : |
+      # $azure_builds = Invoke-RestMethod -Uri "https://dev.azure.com/danieldonenfeld/GSL/_apis/build/builds?api-version=4.1" -Method GET
+      # $azure_triggerInfo = $azure_builds.value[0].triggerInfo
+      # $azure_triggerInfo.{pr.sourceSha}
+
+      $pull_request_sha = git rev-parse HEAD^2
+
+      $appveyor_build_list = Invoke-RestMethod -Uri "https://ci.appveyor.com/api/projects/dadonenf/GSL/history?recordsNumber=3" -Method GET
+      $current_appveyor_build = $appveyor_build_list.builds | Where-Object {$_.pullRequestHeadCommitId -eq $pull_request_sha}
+      Write-Host $current_appveyor_build
+  displayName: 'Determine Appveyor build'
+
