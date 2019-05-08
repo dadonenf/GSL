@@ -60,7 +60,7 @@ steps:
       echo Trying to update git repo
       echo HI >> temp.log
       git add temp.log
-      git commit -m "[skip ci] updating the log"
+      git commit -m "[skip ci][skip azp] updating the log"
       git push
     )
   displayName: 'Try some git commands'
