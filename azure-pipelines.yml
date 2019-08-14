@@ -3,6 +3,18 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+trigger:
+  paths:
+    exclude:
+    - temp.log
+    - asm/Visual*
+
+pr:
+  paths:
+    exclude:
+    - temp.log
+    - asm/Visual*
+
 
 variables:
   #TODO: These variables need to be in the matrix
