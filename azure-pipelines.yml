@@ -5,12 +5,16 @@
 
 trigger:
   paths:
+    include:
+    - '*' # same as '/' for the repository root
     exclude:
     - temp.log
     - asm/Visual*
 
 pr:
   paths:
+    include:
+    - '*' # same as '/' for the repository root
     exclude:
     - temp.log
     - asm/Visual*
