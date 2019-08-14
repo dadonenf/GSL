@@ -4,6 +4,9 @@
 # https://aka.ms/yaml
 
 trigger:
+  branches:
+    include:
+    - '*'  # must quote since "*" is a YAML reserved character; we want a string
   paths:
     include:
     - '*' # same as '/' for the repository root
@@ -12,6 +15,9 @@ trigger:
     - asm/Visual*
 
 pr:
+  branches:
+    include:
+    - '*'  # must quote since "*" is a YAML reserved character; we want a string
   paths:
     include:
     - '*' # same as '/' for the repository root
